@@ -7,13 +7,13 @@ PTT_BASE_URL = 'https://www.ptt.cc'
 # option parser
 parser = OptionParser()
 parser.add_option("-b",
-                  "--boardname",
-                  dest="boardname",
+                  "--board",
+                  dest="board",
                   help="Board name to search",
-                  metavar="BOARD")
+                  metavar="<board name>")
 (options, args) = parser.parse_args()
 
-html_doc = requests.get('{}/bbs/{}'.format(PTT_BASE_URL, options.boardname))
+html_doc = requests.get('{}/bbs/{}'.format(PTT_BASE_URL, options.board))
 soup = BeautifulSoup(html_doc.text, 'html.parser')
 
 post_list = []
