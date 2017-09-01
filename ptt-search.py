@@ -4,6 +4,7 @@ from optparse import OptionParser
 
 # constant variables
 PTT_BASE_URL = 'https://www.ptt.cc'
+PTT_OVER_18_URL = PTT_BASE_URL + '/ask/over18'
 
 # option parser
 parser = OptionParser()
@@ -37,6 +38,17 @@ while page <= int(options.pages):
     # request and parse current page
     html_doc = requests.get(cur_url)
     soup = BeautifulSoup(html_doc.text, 'html.parser')
+
+    if soup.find('div', {'class': 'over18-notice'}):
+        payload = {
+            'from': cur_url,
+            'yes': 'yes'
+        }
+        reqs = requests.session()
+        html_doc = reqs.post(PTT_OVER_18_URL, data=payload)
+        html_doc = reqs.get(cur_url)
+        soup = BeautifulSoup(html_doc.text, 'html.parser')
+
     prev_url = soup.find('div', {'class': 'btn-group-paging'}).findChildren()[1]['href']
 
     # fetch posts from current page
