@@ -39,6 +39,7 @@ while page <= int(options.pages):
     html_doc = requests.get(cur_url)
     soup = BeautifulSoup(html_doc.text, 'html.parser')
 
+    # post payload if there is over18 check
     if soup.find('div', {'class': 'over18-notice'}):
         payload = {
             'from': cur_url,
