@@ -72,5 +72,8 @@ while page <= int(options.pages):
         exit()
 
 # print fetched posts and links
-for post in post_list:
-    print('{} <{}> {} ({})'.format(post['date'], post['author'], post['title'], post['link']))
+if post_list:
+    for post in post_list:
+        print('{} <{}> {} ({})'.format(post['date'], post['author'], post['title'], post['link']))
+else:
+    print('Result not found.')
