@@ -35,7 +35,6 @@ page = 1
 post_list = []
 
 while page <= int(options.pages):
-
     try:
         # request and parse current page
         html_doc = requests.get(cur_url)
