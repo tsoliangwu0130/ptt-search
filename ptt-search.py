@@ -42,13 +42,12 @@ while page <= int(options.pages):
     # fetch posts from current page
     for post in soup.find_all('div', {'class': 'title'}):
         title = post.text
-        link = 'URL not found.' if not post.find('a') else post.find('a')['href']
+        link = 'URL not found.' if not post.find('a') else PTT_BASE_URL + post.find('a')['href']
         if options.category in title and options.keyword in title:
-            post_list.append({'title': title, 'link': PTT_BASE_URL + link})
+            post_list.append({'title': title.strip(), 'link': link.strip()})
     cur_url = PTT_BASE_URL + prev_url
     page += 1
 
 # print fetched posts and links
 for idx, post in enumerate(post_list):
-    print(post['title'])
-    print(post['link'])
+    print('{0:0>2} '.format(idx) + '{}: {}'.format(post['title'], post['link']))
