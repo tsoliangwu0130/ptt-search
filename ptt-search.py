@@ -2,6 +2,8 @@ import requests
 from bs4 import BeautifulSoup
 from optparse import OptionParser
 
+PTT_BASE_URL = 'https://www.ptt.cc'
+
 # option parser
 parser = OptionParser()
 parser.add_option("-b",
@@ -11,8 +13,13 @@ parser.add_option("-b",
                   metavar="BOARD")
 (options, args) = parser.parse_args()
 
-PTT_BASE_URL = 'https://www.ptt.cc/bbs/'
+html_doc = requests.get('{}/bbs/{}'.format(PTT_BASE_URL, options.boardname))
+soup = BeautifulSoup(html_doc.text, 'html.parser')
 
-res = requests.get(PTT_BASE_URL + options.boardname)
-soup = BeautifulSoup(res.text, 'html.parser')
-print(soup.prettify())
+post_list = []
+for post in soup.find_all('div', {'class': 'title'}):
+    title = post.text
+    link = post.find('a')['href']
+    post_list.append({'title': title, 'link': PTT_BASE_URL + link})
+
+print(post_list)
