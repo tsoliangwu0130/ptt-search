@@ -40,14 +40,20 @@ while page <= int(options.pages):
     prev_url = soup.find('div', {'class': 'btn-group-paging'}).findChildren()[1]['href']
 
     # fetch posts from current page
-    for post in soup.find_all('div', {'class': 'title'}):
-        title = post.text
-        link = 'URL not found.' if not post.find('a') else PTT_BASE_URL + post.find('a')['href']
+    for post in soup.find_all('div', {'class': 'r-ent'}):
+        post_title = post.find('div', {'class': 'title'})
+        title = post_title.text
+        link = 'URL not found.' if not post_title.find('a') else PTT_BASE_URL + post_title.find('a')['href']
         if options.category in title and options.keyword in title:
-            post_list.append({'title': title.strip(), 'link': link.strip()})
+            date = post.find('div', {'class': 'date'}).text
+            author = post.find('div', {'class': 'author'}).text
+            post_list.append({'title': title.strip(),
+                              'link': link.strip(),
+                              'date': date.strip(),
+                              'author': author.strip()})
     cur_url = PTT_BASE_URL + prev_url
     page += 1
 
 # print fetched posts and links
-for idx, post in enumerate(post_list):
-    print('{0:0>2} '.format(idx) + '{}: {}'.format(post['title'], post['link']))
+for post in post_list:
+    print('{} <{}> {} {}'.format(post['date'], post['author'], post['title'], post['link']))
