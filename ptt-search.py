@@ -22,4 +22,6 @@ for post in soup.find_all('div', {'class': 'title'}):
     link = post.find('a')['href']
     post_list.append({'title': title, 'link': PTT_BASE_URL + link})
 
-print(post_list)
+for post in post_list:
+    print(post['title'])
+    print(post['link'])
