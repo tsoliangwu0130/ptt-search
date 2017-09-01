@@ -76,5 +76,6 @@ if post_list:
     sorted_list = sorted(post_list, key=lambda x: x['date'])
     for post in sorted_list:
         print('{} <{}> {} ({})'.format(post['date'], post['author'], post['title'], post['link']))
+    print('\n' + 'Found {} posts.'.format(len(sorted_list)))
 else:
     print('Result not found.')
