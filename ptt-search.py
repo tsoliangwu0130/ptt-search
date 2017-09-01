@@ -73,7 +73,8 @@ while page <= int(options.pages):
 
 # print fetched posts and links
 if post_list:
-    for post in post_list:
+    sorted_list = sorted(post_list, key=lambda x: x['date'])
+    for post in sorted_list:
         print('{} <{}> {} ({})'.format(post['date'], post['author'], post['title'], post['link']))
 else:
     print('Result not found.')
