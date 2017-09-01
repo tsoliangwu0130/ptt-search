@@ -43,7 +43,7 @@ while page <= int(options.pages):
     for post in soup.find_all('div', {'class': 'r-ent'}):
         post_title = post.find('div', {'class': 'title'})
         title = post_title.text
-        link = 'URL not found.' if not post_title.find('a') else PTT_BASE_URL + post_title.find('a')['href']
+        link = 'URL not found' if not post_title.find('a') else PTT_BASE_URL + post_title.find('a')['href']
         if options.category in title and options.keyword in title:
             date = post.find('div', {'class': 'date'}).text
             author = post.find('div', {'class': 'author'}).text
@@ -56,4 +56,4 @@ while page <= int(options.pages):
 
 # print fetched posts and links
 for post in post_list:
-    print('{} <{}> {} {}'.format(post['date'], post['author'], post['title'], post['link']))
+    print('{} <{}> {} ({})'.format(post['date'], post['author'], post['title'], post['link']))
