@@ -10,23 +10,27 @@ PTT_OVER_18_URL = PTT_BASE_URL + '/ask/over18'
 parser = OptionParser()
 parser.add_option("-b",
                   dest="board",
-                  help="board name",
+                  help="search posts in a board (required)",
                   metavar="<board name>")
 parser.add_option("-c",
                   dest="category",
-                  help="post category",
+                  help="search posts in certain category",
                   default='',
                   metavar="<category>")
 parser.add_option("-k",
                   dest="keyword",
-                  help="post keyword",
+                  help="search posts with keyword",
                   default='',
                   metavar="<keyword>")
-parser.add_option("-p",
+parser.add_option("--pages",
                   dest="pages",
-                  help="number of pages",
+                  help="search posts for how many pages",
                   default=1,
                   metavar="<pages>")
+parser.add_option("--push",
+                  dest="push",
+                  help="search posts with push more than a number",
+                  metavar="<push>")
 (options, args) = parser.parse_args()
 
 # intial variables
