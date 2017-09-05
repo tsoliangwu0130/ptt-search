@@ -1,5 +1,7 @@
 # ptt-search [![MIT licensed](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 
+A simple Python script to fetch PTT post from the command line.
+
 ## Usage
 
 1. To install all dependencies, simply run:
