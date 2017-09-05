@@ -31,10 +31,10 @@ parser.add_option("-p",
 
 # intial variables
 cur_url = '{}/bbs/{}'.format(PTT_BASE_URL, options.board)
-page = 1
+page_cnt = 1
 post_list = []
 
-while page <= int(options.pages):
+while page_cnt <= int(options.pages):
     try:
         # request and parse current page
         reqs = requests.session()
@@ -66,7 +66,7 @@ while page <= int(options.pages):
                                   'date': date.strip(),
                                   'author': author.strip()})
         cur_url = PTT_BASE_URL + prev_url
-        page += 1
+        page_cnt += 1
     except:
         print('Ok, something went wrong :(')
         exit()
