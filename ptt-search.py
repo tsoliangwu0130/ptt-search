@@ -2,6 +2,8 @@ import requests
 from bs4 import BeautifulSoup
 from optparse import OptionParser
 
+from utils import format_push
+
 # constant variables
 PTT_BASE_URL = 'https://www.ptt.cc'
 PTT_OVER_18_URL = PTT_BASE_URL + '/ask/over18'
@@ -14,7 +16,7 @@ parser.add_option("-b",
                   metavar="<board name>")
 parser.add_option("-c",
                   dest="category",
-                  help="search posts in certain category",
+                  help="search posts in a certain category",
                   default='',
                   metavar="<category>")
 parser.add_option("-k",
@@ -29,8 +31,8 @@ parser.add_option("--pages",
                   metavar="<pages>")
 parser.add_option("--push",
                   dest="push",
-                  help="search posts with push more than a number",
-                  metavar="<push>")
+                  help="search posts with push more than an amount",
+                  metavar="<push amount>")
 (options, args) = parser.parse_args()
 
 # intial variables
@@ -62,13 +64,15 @@ while page_cnt <= int(options.pages):
             post_title = post.find('div', {'class': 'title'})
             title = post_title.text
             link = 'URL not found' if not post_title.find('a') else PTT_BASE_URL + post_title.find('a')['href']
+            push = format_push(post)
             if options.category in title and options.keyword in title:
                 date = post.find('div', {'class': 'date'}).text
                 author = post.find('div', {'class': 'author'}).text
-                post_list.append({'title': title.strip(),
-                                  'link': link.strip(),
-                                  'date': date.strip(),
-                                  'author': author.strip()})
+                post_list.append({'date': date.strip(),
+                                  'push': push,
+                                  'author': author.strip(),
+                                  'title': title.strip(),
+                                  'link': link.strip()})
         cur_url = PTT_BASE_URL + prev_url
         page_cnt += 1
     except:
@@ -79,7 +83,7 @@ while page_cnt <= int(options.pages):
 if post_list:
     sorted_list = sorted(post_list, key=lambda x: x['date'])
     for post in sorted_list:
-        print('{} <{}> {} ({})'.format(post['date'], post['author'], post['title'], post['link']))
+        print('{} {} <{}> {} ({})'.format(post['date'], post['push'], post['author'], post['title'], post['link']))
     print('\n' + 'Found {} posts.'.format(len(sorted_list)))
 else:
     print('Result not found.')
