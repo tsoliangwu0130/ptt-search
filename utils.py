@@ -42,7 +42,7 @@ def format_push(post):
     return push
 
 
-def is_greater_than(cur_push, push_amount):
+def is_greater(cur_push, push_amount):
     if not push_amount:
         return True
     elif cur_push == '爆':

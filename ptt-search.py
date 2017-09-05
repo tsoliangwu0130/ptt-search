@@ -1,7 +1,7 @@
 import requests
 from bs4 import BeautifulSoup
 
-from utils import format_push, get_options, is_greater_than
+from utils import format_push, get_options, is_greater
 
 # constant variables
 PTT_BASE_URL = 'https://www.ptt.cc'
@@ -37,7 +37,7 @@ while page_cnt <= int(options.pages):
             title = post_title.text
             link = 'URL not found' if not post_title.find('a') else PTT_BASE_URL + post_title.find('a')['href']
             push = format_push(post)
-            if options.category in title and options.keyword in title and is_greater_than(push, options.push):
+            if options.category in title and options.keyword in title and is_greater(push, options.push):
                 date = post.find('div', {'class': 'date'}).text
                 author = post.find('div', {'class': 'author'}).text
                 post_list.append({'date': date.strip(),
