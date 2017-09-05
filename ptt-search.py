@@ -37,7 +37,8 @@ post_list = []
 while page <= int(options.pages):
     try:
         # request and parse current page
-        html_doc = requests.get(cur_url)
+        reqs = requests.session()
+        html_doc = reqs.get(cur_url)
         soup = BeautifulSoup(html_doc.text, 'html.parser')
 
         # post payload if there is over18 check
@@ -46,8 +47,7 @@ while page <= int(options.pages):
                 'from': cur_url,
                 'yes': 'yes'
             }
-            reqs = requests.session()
-            html_doc = reqs.post(PTT_OVER_18_URL, data=payload)
+            reqs.post(PTT_OVER_18_URL, data=payload)
             html_doc = reqs.get(cur_url)
             soup = BeautifulSoup(html_doc.text, 'html.parser')
 
