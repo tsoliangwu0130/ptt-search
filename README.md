@@ -2,16 +2,16 @@
 
 ## Usage
 
-1. To install app dependencies, simply run:
+1. To install all dependencies, simply run:
 
 ```
 $ pip install -r requirements.txt
 ```
 
-2. Start the app
+2. Fetch posts
 
 ```
-$ python ptt-search.py
+$ python ptt-search.py -b 'gossiping' -c '新聞'
 ```
 
 ## Options
