@@ -1,41 +1,13 @@
 import requests
 from bs4 import BeautifulSoup
-from optparse import OptionParser
 
-from utils import format_push
+from utils import format_push, get_options
 
 # constant variables
 PTT_BASE_URL = 'https://www.ptt.cc'
 PTT_OVER_18_URL = PTT_BASE_URL + '/ask/over18'
 
-# option parser
-parser = OptionParser()
-parser.add_option("-b",
-                  dest="board",
-                  help="search posts in a board (required)",
-                  metavar="<board name>")
-parser.add_option("-c",
-                  dest="category",
-                  help="search posts in a certain category",
-                  default='',
-                  metavar="<category>")
-parser.add_option("-k",
-                  dest="keyword",
-                  help="search posts with keyword",
-                  default='',
-                  metavar="<keyword>")
-parser.add_option("--pages",
-                  dest="pages",
-                  help="search posts for how many pages",
-                  default=1,
-                  metavar="<pages>")
-parser.add_option("--push",
-                  dest="push",
-                  help="search posts with push more than an amount",
-                  metavar="<push amount>")
-(options, args) = parser.parse_args()
-
-# intial variables
+options = get_options()
 cur_url = '{}/bbs/{}'.format(PTT_BASE_URL, options.board)
 page_cnt = 1
 post_list = []
