@@ -1,3 +1,4 @@
+import math
 from optparse import OptionParser
 
 
@@ -39,3 +40,16 @@ def format_push(post):
     else:
         push = raw_push
     return push
+
+
+def is_greater_than(cur_push, push_amount):
+    if not push_amount:
+        return True
+    elif cur_push == '爆':
+        return math.inf >= int(push_amount)
+    elif cur_push == 'NA':
+        return 0 >= int(push_amount)
+    elif cur_push.startswith('X'):
+        return -math.inf >= int(push_amount)
+    else:
+        return int(cur_push) >= int(push_amount)
