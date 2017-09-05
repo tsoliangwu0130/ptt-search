@@ -22,10 +22,10 @@ $ python ptt-search.py -b 'gossiping' -c '新聞' --pages 5 --push 10
 Usage: ptt-search.py [options]
 
 Options:
-  -h, --help            show this help message and exit
-  -b <board name>       search posts in a board (required)
-  -c <category>         search posts in a certain category
-  -k <keyword>          search posts with keyword
-  --pages=<pages>       search posts for how many pages
-  --push=<push amount>  search posts with push more than an amount
+  -h, --help          show this help message and exit
+  -b <board name>     search posts in a board (required)
+  -c <category>       search posts in a certain category
+  -k <keyword>        search posts with keyword
+  --pages=<page num>  search posts for how many pages
+  --push=<push num>   search posts with push more than an amount
 ```
