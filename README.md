@@ -13,7 +13,7 @@ $ pip install -r requirements.txt
 2. Fetch posts
 
 ```
-$ python ptt-search.py -b 'gossiping' -c '新聞' --pages 5 --push 10
+$ python ptt-search.py -b 'gossiping' -c '新聞' -p 5 -z 10
 ```
 
 ## Options
@@ -22,10 +22,10 @@ $ python ptt-search.py -b 'gossiping' -c '新聞' --pages 5 --push 10
 Usage: ptt-search.py [options]
 
 Options:
-  -h, --help          show this help message and exit
-  -b <board name>     search posts in a board (required)
-  -c <category>       search posts in a certain category
-  -k <keyword>        search posts with keyword
-  --pages=<page num>  search posts for how many pages
-  --push=<push num>   search posts with push more than an amount
+  -h, --help        show this help message and exit
+  -b <board name>   search posts in a board (required)
+  -c <category>     search posts in a certain category
+  -k <keyword>      search posts with keyword
+  -p <page amount>  search posts for how many pages
+  -z <push amount>  search posts with push more than an amount
 ```
