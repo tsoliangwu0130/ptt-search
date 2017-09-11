@@ -55,8 +55,8 @@ def fetch_post(options, url):
                         return post_list
             cur_url = PTT_BASE_URL + prev_url
             if page_cnt == page_limit:
-                print('Found only {} results in {} pages'.format(len(post_list), page_limit))
-                ans = input('Do you want keep searching (y/n)?')
+                print('Found {} results in {} pages'.format(len(post_list), page_limit))
+                ans = input('Do you want keep searching? (y/n) ')
                 if ans == 'y':
                     page_limit += 10
                 else:
@@ -68,11 +68,13 @@ def fetch_post(options, url):
 
 # print fetched posts and links
 def print_post(post_list):
+    print('--------')
     if post_list:
         sorted_list = sorted(post_list, key=lambda x: x['date'])
         for post in sorted_list:
             print('{} {} <{}> {} ({})'.format(post['date'], post['push'], post['author'], post['title'], post['link']))
-        print('\n' + 'Found {} posts.'.format(len(sorted_list)))
+        print('--------')
+        print('Found {} posts.'.format(len(sorted_list)))
     else:
         print('Result not found.')
 
