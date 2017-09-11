@@ -19,6 +19,7 @@ def fetch_post(options, url):
     while True:
         try:
             page_cnt += 1
+            print('> Fetching page {}...'.format(page_cnt))
             # request and parse current page
             reqs = requests.session()
             html_doc = reqs.get(cur_url)
@@ -68,12 +69,12 @@ def fetch_post(options, url):
 
 # print fetched posts and links
 def print_post(post_list):
-    print('--------')
+    print('\n---- Results ----')
     if post_list:
         sorted_list = sorted(post_list, key=lambda x: x['date'])
         for post in sorted_list:
             print('{} {} <{}> {} ({})'.format(post['date'], post['push'], post['author'], post['title'], post['link']))
-        print('--------')
+        print('---- Results ----\n')
         print('Found {} posts.'.format(len(sorted_list)))
     else:
         print('Result not found.')
