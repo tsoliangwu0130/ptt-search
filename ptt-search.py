@@ -1,7 +1,7 @@
 import requests
 from bs4 import BeautifulSoup
 
-from utils import format_push, get_options, is_greater
+from utils import format_date, format_push, get_options, is_greater
 
 # constant variables
 PTT_BASE_URL = 'https://www.ptt.cc'
@@ -9,12 +9,16 @@ PTT_OVER_18_URL = PTT_BASE_URL + '/ask/over18'
 
 
 # fetch posts from ptt
-def fetch_post(options, cur_url):
+def fetch_post(options, url):
     result_cnt = 0
+    page_cnt = 0
+    page_limit = 10
     post_list = []
+    cur_url = url
 
     while True:
         try:
+            page_cnt += 1
             # request and parse current page
             reqs = requests.session()
             html_doc = reqs.get(cur_url)
@@ -39,9 +43,9 @@ def fetch_post(options, cur_url):
                 link = 'URL not found' if not post_title.find('a') else PTT_BASE_URL + post_title.find('a')['href']
                 push = format_push(post)
                 if options.category in title and options.keyword in title and is_greater(push, options.push_num):
-                    date = post.find('div', {'class': 'date'}).text
+                    date = format_date(post)
                     author = post.find('div', {'class': 'author'}).text
-                    post_list.append({'date': date.strip(),
+                    post_list.append({'date': date,
                                       'push': push,
                                       'author': author.strip(),
                                       'title': title.strip(),
@@ -50,6 +54,13 @@ def fetch_post(options, cur_url):
                     if result_cnt >= int(options.result_num):
                         return post_list
             cur_url = PTT_BASE_URL + prev_url
+            if page_cnt == page_limit:
+                print('Found only {} results in {} pages'.format(len(post_list), page_limit))
+                ans = input('Do you want keep searching (y/n)?')
+                if ans == 'y':
+                    page_limit += 10
+                else:
+                    return post_list
         except:
             print('Ok, something went wrong :(')
             exit()
@@ -68,7 +79,7 @@ def print_post(post_list):
 
 if __name__ == "__main__":
     options = get_options()
-    cur_url = '{}/bbs/{}'.format(PTT_BASE_URL, options.board)
+    entry_url = '{}/bbs/{}'.format(PTT_BASE_URL, options.board)
 
-    post_list = fetch_post(get_options(), '{}/bbs/{}'.format(PTT_BASE_URL, options.board))
+    post_list = fetch_post(options, entry_url)
     print_post(post_list)

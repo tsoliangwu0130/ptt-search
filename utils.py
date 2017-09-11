@@ -21,7 +21,7 @@ def get_options():
     parser.add_option('-n',
                       dest='result_num',
                       help='search how many posts',
-                      default=1,
+                      default=20,
                       metavar='<rsult amount>')
     parser.add_option('-z',
                       dest='push_num',
@@ -29,6 +29,15 @@ def get_options():
                       metavar='<push amount>')
     (options, args) = parser.parse_args()
     return options
+
+
+def format_date(post):
+    raw_date = post.find('div', {'class': 'date'}).text.strip()
+    if len(raw_date) <= 4:
+        date = '0' + raw_date
+    else:
+        date = raw_date
+    return date
 
 
 def format_push(post):
