@@ -18,13 +18,13 @@ def get_options():
                       help='search posts with keyword',
                       default='',
                       metavar='<keyword>')
-    parser.add_option('-p',
-                      dest='pages',
-                      help='search posts for how many pages',
+    parser.add_option('-n',
+                      dest='result_num',
+                      help='search how many posts',
                       default=1,
-                      metavar='<page amount>')
+                      metavar='<rsult amount>')
     parser.add_option('-z',
-                      dest='push',
+                      dest='push_num',
                       help='search posts with push more than an amount',
                       metavar='<push amount>')
     (options, args) = parser.parse_args()
