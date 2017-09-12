@@ -8,16 +8,11 @@ def get_options():
                       dest='board',
                       help='search posts in a board (required)',
                       metavar='<board name>')
-    parser.add_option('-c',
-                      dest='category',
-                      help='search posts in a certain category',
-                      default='',
-                      metavar='<category>')
     parser.add_option('-k',
-                      dest='keyword',
-                      help='search posts with keyword',
+                      dest='keywords',
+                      help='search posts with keywords (separate keywords with space)',
                       default='',
-                      metavar='<keyword>')
+                      metavar='<keywords>')
     parser.add_option('-n',
                       dest='result_num',
                       help='search how many posts',

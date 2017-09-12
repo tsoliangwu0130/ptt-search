@@ -10,16 +10,15 @@ PTT_OVER_18_URL = PTT_BASE_URL + '/ask/over18'
 
 # fetch posts from ptt
 def fetch_post(options, url):
+    cur_url = url
+    keywords = options.keywords.split()
     result_cnt = 0
     page_cnt = 0
     page_limit = 10
     post_list = []
-    cur_url = url
 
     while True:
         try:
-            page_cnt += 1
-            print('> Fetching page {}...'.format(page_cnt))
             # request and parse current page
             reqs = requests.session()
             html_doc = reqs.get(cur_url)
@@ -37,13 +36,16 @@ def fetch_post(options, url):
 
             prev_url = soup.find('div', {'class': 'btn-group-paging'}).findChildren()[1]['href']
 
+            page_cnt += 1
+            print('> Fetching page {}...'.format(page_cnt))
+
             # fetch posts from current page
             for post in soup.find_all('div', {'class': 'r-ent'}):
                 post_title = post.find('div', {'class': 'title'})
                 title = post_title.text
                 link = 'URL not found' if not post_title.find('a') else PTT_BASE_URL + post_title.find('a')['href']
                 push = format_push(post)
-                if options.category in title and options.keyword in title and is_greater(push, options.push_num):
+                if all(keyword in title for keyword in keywords) and is_greater(push, options.push_num):
                     date = format_date(post)
                     author = post.find('div', {'class': 'author'}).text
                     post_list.append({'date': date,
