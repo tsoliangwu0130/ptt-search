@@ -45,7 +45,7 @@ def fetch_post(options, url):
                 title = post_title.text
                 link = 'URL not found' if not post_title.find('a') else PTT_BASE_URL + post_title.find('a')['href']
                 push = format_push(post)
-                if all(keyword in title for keyword in keywords) and is_greater(push, options.push_num):
+                if all(keyword.lower() in title.lower() for keyword in keywords) and is_greater(push, options.push_num):
                     date = format_date(post)
                     author = post.find('div', {'class': 'author'}).text
                     post_list.append({'date': date,
