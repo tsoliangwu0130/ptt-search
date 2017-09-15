@@ -28,7 +28,7 @@ def get_options():
 
 def format_date(post):
     raw_date = post.find('div', {'class': 'date'}).text.strip()
-    if len(raw_date) <= 4:
+    if len(raw_date) < 5:
         date = '0' + raw_date
     else:
         date = raw_date
