@@ -14,7 +14,7 @@ def fetch_post(options, url):
     keywords = options.keywords.split()
     result_cnt = 0
     page_cnt = 0
-    page_limit = int(options.result_num) % 20
+    page_limit = int(options.result_num) // 20
     post_list = []
 
     while True:
