@@ -60,7 +60,7 @@ def fetch_post(options, url):
             if page_cnt == page_limit:
                 print('Found {} results in {} pages'.format(len(post_list), page_limit))
                 ans = input('Do you want keep searching? (y/n) ')
-                if ans == 'y':
+                if ans in ['y', 'Y', 'yes']:
                     page_limit += 10
                 else:
                     return post_list
