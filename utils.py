@@ -6,7 +6,7 @@ def get_options():
     parser = OptionParser()
     parser.add_option('-b',
                       dest='board',
-                      help='search posts in a board (required)',
+                      help='[required] search posts in a board',
                       metavar='<board name>')
     parser.add_option('-k',
                       dest='keywords',
@@ -23,6 +23,9 @@ def get_options():
                       help='search posts with push more than an amount',
                       metavar='<push amount>')
     (options, args) = parser.parse_args()
+    if not options.board:
+        parser.error('board name (-b) is not given.')
+
     return options
 
 
