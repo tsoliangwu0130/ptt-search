@@ -6,7 +6,7 @@ def get_options():
     parser = OptionParser()
     parser.add_option('-b',
                       dest='board',
-                      help='[required] search posts in a board',
+                      help='search posts in a board (required)',
                       metavar='<board name>')
     parser.add_option('-k',
                       dest='keywords',
