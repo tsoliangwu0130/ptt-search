@@ -12,8 +12,7 @@ PTT_OVER_18_URL = PTT_BASE_URL + '/ask/over18'
 def fetch_post(options, url):
     cur_url = url
     keywords = options.keywords.split()
-    result_cnt = 0
-    page_cnt = 0
+    result_cnt = page_cnt = 0
     page_limit = int(options.result_num) // 20 + 1
     post_list = []
 
@@ -48,11 +47,13 @@ def fetch_post(options, url):
                 if all(keyword.lower() in title.lower() for keyword in keywords) and is_greater(push, options.push_num):
                     date = format_date(post)
                     author = post.find('div', {'class': 'author'}).text
-                    post_list.append({'date': date,
-                                      'push': push,
-                                      'author': author.strip(),
-                                      'title': title.strip(),
-                                      'link': link.strip()})
+                    post_list.append({
+                        'date': date,
+                        'push': push,
+                        'author': author.strip(),
+                        'title': title.strip(),
+                        'link': link.strip()
+                    })
                     result_cnt += 1
                     if result_cnt >= int(options.result_num):
                         return post_list
@@ -64,19 +65,18 @@ def fetch_post(options, url):
                     page_limit += 10
                 else:
                     return post_list
-        except:
-            print('Ok, something went wrong :(')
-            exit()
+        except Exception:
+            exit('Ok, something went wrong :(')
 
 
 # print fetched posts and links
 def print_post(post_list):
-    print('\n---- Results ----')
     if post_list:
+        print('\n{0} Results {0}\n'.format('-' * 50))
         sorted_list = sorted(post_list, key=lambda x: x['date'])
         for post in sorted_list:
-            print('{} {} <{}> {} ({})'.format(post['date'], post['push'], post['author'], post['title'], post['link']))
-        print('---- Results ----\n')
+            print('{}  {}  {:12}  {:51}  {}'.format(post['date'], post['push'], post['author'], post['link'], post['title']))
+        print('\n{0} Results {0}\n'.format('-' * 50))
         print('Found {} posts.'.format(len(sorted_list)))
     else:
         print('Result not found.')
