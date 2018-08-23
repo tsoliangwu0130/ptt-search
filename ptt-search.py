@@ -5,7 +5,6 @@ from utils import format_date, format_push, get_options, is_greater
 
 # constant variables
 PTT_BASE_URL = 'https://www.ptt.cc'
-PTT_OVER_18_URL = PTT_BASE_URL + '/ask/over18'
 
 
 # fetch posts from ptt
@@ -20,19 +19,8 @@ def fetch_post(options, url):
         try:
             # request and parse current page
             reqs = requests.session()
-            html_doc = reqs.get(cur_url)
+            html_doc = reqs.get(cur_url, cookies={'over18': '1'}, verify=True, timeout=3)
             soup = BeautifulSoup(html_doc.text, 'html.parser')
-
-            # post payload if there is over18 check
-            if soup.find('div', {'class': 'over18-notice'}):
-                payload = {
-                    'from': cur_url,
-                    'yes': 'yes'
-                }
-                reqs.post(PTT_OVER_18_URL, data=payload)
-                html_doc = reqs.get(cur_url)
-                soup = BeautifulSoup(html_doc.text, 'html.parser')
-
             prev_url = soup.find('div', {'class': 'btn-group-paging'}).findChildren()[1]['href']
 
             page_cnt += 1
